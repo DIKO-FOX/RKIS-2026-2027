@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata;
 using System.Runtime.CompilerServices;
 using System.Xml;
 
@@ -23,10 +24,18 @@ Console.Write($"Добавлен пользователь с именем: {name
 Console.ReadLine();
 
 
+<<<<<<< HEAD
 string[] toDos = new string[2];
 bool running = true;
+=======
+// Работа 3
+string[] todos = new string[2];
+int todoCount = 0;
+bool running = true; //нужно для того чтобы exit останавливал работу, еще можно было сделать метод и через return
+>>>>>>> 1dba62c (добавил работу команд view и add, но они не работают нормально. Пока что закомичу потом пофикшу.)
 
 while (running){
+    Console.WriteLine("Введите команду: ");
     string userInput = Console.ReadLine();
 
     switch (userInput){
@@ -47,12 +56,32 @@ while (running){
             Console.WriteLine($"{name} {lastName}, {age}");
             break;
 
-        case string s when s.StartsWith("add \""):
-            string task = s.Substring(5).TrimEnd('"');
-
+        case string s when s.StartsWith("add "):
+            string task = s.Substring(4).TrimEnd('"');
+            if (todoCount >= todos.Length){
+                string[] newTodos = new string[todos.Length * 2];
+                for (int i = 0; i < todos.Length; i++){
+                    newTodos[i] = todos[i];
+                }
+                todos = newTodos;
+            }
+            todos[todoCount] = task;
+            todoCount++;
+            Console.WriteLine($"Добавлено: {task}");
             break;
-        case "view":
 
+        case "view":
+            for (int i = 0; i < todos.Length; i++){
+                bool temp = string.IsNullOrEmpty(todos[i]);
+                switch (temp){
+                    case true:
+                        Console.WriteLine($"[{i + 1}] {todos[i]}");
+                        break;
+                    default:
+                        Console.WriteLine("Список задач пуст");
+                        break;
+                }
+            }
             break;
 
         default:

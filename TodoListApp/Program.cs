@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Reflection.Metadata;
-using System.Runtime.CompilerServices;
-using System.Xml;
 
 string name;
 string lastName;
@@ -10,18 +7,16 @@ int year = DateTime.Now.Year;
 
 Console.Write("Работу выполнил Короткий Дмитрий\n");
 Console.Write("Введите свое имя: ");
-
 name = Console.ReadLine();
+
 Console.Write("Введите свою фамилию: ");
-
 lastName = Console.ReadLine();
-Console.Write("Введите свой год рождения: ");
 
+Console.Write("Введите свой год рождения: ");
 yearOfBirth = int.Parse(Console.ReadLine());
 int age = year - yearOfBirth;
 
-Console.Write($"Добавлен пользователь с именем: {name} {lastName}\n В возрасте: {age}");
-Console.ReadLine();
+Console.Write($"Добавлен пользователь с именем: {name} {lastName}\nВ возрасте: {age} \n");
 
 
 <<<<<<< HEAD
@@ -35,7 +30,7 @@ bool running = true; //нужно для того чтобы exit останав
 >>>>>>> 1dba62c (добавил работу команд view и add, но они не работают нормально. Пока что закомичу потом пофикшу.)
 
 while (running){
-    Console.WriteLine("Введите команду: ");
+    Console.Write("Введите команду: ");
     string userInput = Console.ReadLine();
 
     switch (userInput){
@@ -57,10 +52,11 @@ while (running){
             break;
 
         case string s when s.StartsWith("add "):
-            string task = s.Substring(4).TrimEnd('"');
+            string task = s.Substring(5).TrimEnd('"');
             if (todoCount >= todos.Length){
                 string[] newTodos = new string[todos.Length * 2];
-                for (int i = 0; i < todos.Length; i++){
+                for (int i = 0; i < todos.Length; i++)
+                {
                     newTodos[i] = todos[i];
                 }
                 todos = newTodos;
@@ -72,18 +68,12 @@ while (running){
 
         case "view":
             for (int i = 0; i < todos.Length; i++){
-                bool temp = string.IsNullOrEmpty(todos[i]);
-                switch (temp){
-                    case true:
-                        Console.WriteLine($"[{i + 1}] {todos[i]}");
-                        break;
-                    default:
-                        Console.WriteLine("Список задач пуст");
-                        break;
+                if (!string.IsNullOrEmpty(todos[i])){
+                    Console.WriteLine($"[{i + 1}] {todos[i]}");
                 }
             }
             break;
-
+            
         default:
             Console.WriteLine("Неизвестная команда, введите help для вывода списка команд");
             break;
